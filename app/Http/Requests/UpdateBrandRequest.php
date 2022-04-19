@@ -24,8 +24,8 @@ class UpdateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            "title"=>"required|min:3",
-            "description"=>"required|min:20"
+            "title"=>"nullable|min:3",
+            "description"=>"nullable|min:20"
         ];
     }
 }

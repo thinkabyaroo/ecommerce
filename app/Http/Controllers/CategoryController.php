@@ -56,8 +56,15 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id)
     {
+        $category=Category::find($id);
+        if (is_null($category)){
+            return response()->json([
+                'message'=>'not found',
+                'status'=>404
+            ],404);
+        }
         if ($request->has('title')){
             $category->title=$request->title;
         }
@@ -82,6 +89,9 @@ class CategoryController extends Controller
         }
 
         $category->delete();
-        return response()->json(["message"=>"deleted","status"=>204],204);
+        return response()->json([
+            "message"=>"deleted",
+            "status"=>204
+        ],204);
     }
 }

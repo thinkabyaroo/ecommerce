@@ -57,12 +57,19 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(UpdateBrandRequest $request,$id)
     {
-        if ($request->has('title')){
+        $brand=Brand::find($id);
+        if (is_null($brand)){
+            return response()->json([
+                'message'=>'not found',
+                'data'=>404
+            ],404);
+        }
+        if (isset($request->title)){
             $brand->title=$request->title;
         }
-        if ($request->has('description')){
+        if (isset($request->description)){
             $brand->description=$request->description;
         }
         $brand->update();
